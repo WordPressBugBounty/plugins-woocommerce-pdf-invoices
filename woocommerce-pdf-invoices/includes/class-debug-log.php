@@ -8,7 +8,7 @@
  * @version     0.0.1
  */
 
-defined( 'ABSPATH' ) or exit;
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'BEWPI_Debug_Log' ) ) {
 	/**
@@ -158,7 +158,7 @@ if ( ! class_exists( 'BEWPI_Debug_Log' ) ) {
 					return constant( __CLASS__ . '::' . $level );
 				}
 
-				throw new InvalidArgumentException( 'Level "' . $level . '" is not defined, use one of: ' . implode( ', ', array_keys( self::$levels ) ) );
+				throw new InvalidArgumentException( 'Level "' . esc_html( $level ) . '" is not defined, use one of: ' . esc_html( implode( ', ', array_keys( self::$levels ) ) ) );
 			}
 
 			return $level;
@@ -174,7 +174,7 @@ if ( ! class_exists( 'BEWPI_Debug_Log' ) ) {
 		public static function get_level_name( $level ) {
 
 			if ( ! isset( self::$levels[ $level ] ) ) {
-				throw new InvalidArgumentException( 'Level "' . $level . '" is not defined, use one of: ' . implode( ', ', array_keys( self::$levels ) ) );
+				throw new InvalidArgumentException( 'Level "' . esc_html( $level ). '" is not defined, use one of: ' . esc_html( implode( ', ', array_keys( self::$levels ) ) ) );
 			}
 
 			return self::$levels[ $level ];

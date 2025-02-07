@@ -155,7 +155,7 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 
 		if ( (bool) $this->template_options['bewpi_reset_counter_yearly'] ) {
 			// get formatted numbers by year and greater then given invoice number.
-			$files = $wpdb->get_col( $wpdb->prepare(
+			$files = $wpdb->get_col( $wpdb->prepare( //phpcs:ignore
 				"SELECT pm3.meta_value AS pdf_path FROM wp_postmeta pm1
 						INNER JOIN wp_postmeta pm2 ON pm1.post_id = pm2.post_id
   						INNER JOIN wp_postmeta pm3 ON pm1.post_id = pm3.post_id
@@ -167,7 +167,7 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 			) ); // db call ok; no-cache ok.
 		} else {
 			// get formatted numbers greater then given invoice number.
-			$files = $wpdb->get_col( $wpdb->prepare(
+			$files = $wpdb->get_col( $wpdb->prepare( //phpcs:ignore
 				"SELECT pm2.meta_value AS pdf_path FROM wp_postmeta pm1
 						INNER JOIN wp_postmeta pm2 ON pm1.post_id = pm2.post_id
 					WHERE (pm1.meta_key = '_bewpi_invoice_number' AND pm1.meta_value >= %d)
@@ -221,7 +221,7 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 			);
 		}
 
-		return $wpdb->query( $query ); // db call ok; no-cache ok. WPCS: unprepared SQL OK.
+		return $wpdb->query( $query ); //phpcs:ignore
 	}
 
 	/**
@@ -279,7 +279,7 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 			);
 		}
 
-		return intval( $wpdb->get_var( $query ) ); // db call ok; no-cache ok. WPCS: unprepared SQL OK.
+		return intval( $wpdb->get_var( $query ) ); //phpcs:ignore
 	}
 
 	/**
@@ -716,7 +716,7 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 		_deprecated_function( __FUNCTION__, 'Invoices for WooCommerce v2.8', 'WPI()->templater()->get_option( \'bewpi_left_footer_column\' )' );
 		$left_footer_column_text = $this->template_options['bewpi_left_footer_column'];
 		if ( ! empty( $left_footer_column_text ) ) {
-			echo '<p>' . nl2br( $this->replace_placeholders( $left_footer_column_text ) ) . '</p>';
+			echo '<p>' . wp_kses_post( nl2br( $this->replace_placeholders( $left_footer_column_text ) ) ) . '</p>';
 		}
 	}
 
@@ -727,9 +727,9 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 		_deprecated_function( __FUNCTION__, 'Invoices for WooCommerce v2.8' );
 		$right_footer_column_text = $this->template_options['bewpi_right_footer_column'];
 		if ( ! empty( $right_footer_column_text ) ) {
-			echo '<p>' . nl2br( $this->replace_placeholders( $right_footer_column_text ) ) . '</p>';
+			echo '<p>' . wp_kses_post( nl2br( $this->replace_placeholders( $right_footer_column_text ) ) ) . '</p>';
 		} else {
-			echo '<p>' . sprintf( __( '%s of %s', 'woocommerce-pdf-invoices' ), '{PAGENO}', '{nbpg}' ) . '</p>';
+			echo '<p>' . sprintf( esc_html__( '%s of %s', 'woocommerce-pdf-invoices' ), '{PAGENO}', '{nbpg}' ) . '</p>';
 		}
 	}
 
@@ -776,7 +776,7 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 
 		$vat_number = get_post_meta( $order_id, '_vat_number', true );
 		if ( ! empty( $vat_number ) ) {
-			echo '<span>' . sprintf( __( 'VAT Number: %s', 'woocommerce-pdf-invoices' ), $vat_number ) . '</span>';
+			echo '<span>' . sprintf( esc_html__( 'VAT Number: %s', 'woocommerce-pdf-invoices' ), esc_html($vat_number) ) . '</span>';
 		}
 	}
 
@@ -794,7 +794,7 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 			$order_id  = BEWPI_WC_Order_Compatibility::get_id( $this->order );
 			$po_number = get_post_meta( $order_id, '_po_number', true );
 			if ( ! empty( $po_number ) ) {
-				echo '<span>' . sprintf( __( 'Purchase Order Number: %s', 'woocommerce-gateway-purchase-order' ), $po_number ) . '</span>';
+				echo '<span>' . sprintf( esc_html__( 'Purchase Order Number: %s', 'woocommerce-gateway-purchase-order' ), esc_html($po_number) ) . '</span>';
 			}
 		}
 	}
@@ -817,16 +817,16 @@ abstract class BEWPI_Abstract_Invoice extends BEWPI_Abstract_Document {
 			$righter_product_row_tds_css = "";
 			for ( $td = $colspan['left'] + 1; $td <= $columns_count; $td++ ) {
 				if ( $td !== $columns_count ) {
-					$righter_product_row_tds_css .= "tr.product-row td:nth-child(" . $td . "),";
+					$righter_product_row_tds_css .= "tr.product-row td:nth-child(" . absint($td) . "),";
 				} else {
-					  $righter_product_row_tds_css .= "tr.product-row td:nth-child(" . $td . ")";
-					  $righter_product_row_tds_css .= "{ width: " . ( 50 / $colspan['right'] ) . "%; }";
+					  $righter_product_row_tds_css .= "tr.product-row td:nth-child(" . absint($td) . ")";
+					  $righter_product_row_tds_css .= "{ width: " . ( 50 / absint($colspan['right']) ) . "%; }";
 				}
 			}
-			echo $righter_product_row_tds_css;
+			echo $righter_product_row_tds_css; //phpcs:ignore
 			?>
 			tr.product-row td:nth-child(1) {
-				width: <?php echo $this->desc_cell_width; ?>;
+				width: <?php echo esc_html($this->desc_cell_width); ?>;
 			}
 		</style>
 		<?php

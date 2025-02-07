@@ -66,7 +66,7 @@ if ( ! class_exists( 'BEWPI_Packing_Slip' ) ) {
 
 			$url = apply_filters( 'bewpi_pdf_packing_slip_url', $url, $order_id, $action );
 
-			printf( '<a href="%1$s" title="%2$s" class="button shop-order-action packing-slip wpi" target="_blank">%2$s</a>', $url, __( 'View packing slip', 'woocommerce-pdf-invoices' ) );
+			printf( '<a href="%1$s" title="%2$s" class="button shop-order-action packing-slip wpi" target="_blank">%2$s</a>', esc_url($url), esc_html__( 'View packing slip', 'woocommerce-pdf-invoices' ) );
 		}
 
 		/**
@@ -165,7 +165,7 @@ if ( ! class_exists( 'BEWPI_Packing_Slip' ) ) {
 			$url        = apply_filters( 'bewpi_pdf_invoice_url', $url, $order_id, $action );
 			$attr_title = $title . ' ' . __( 'PDF Packing Slip', 'woocommerce-pdf-invoices' );
 
-			printf( '<a href="%1$s" title="%2$s" %3$s>%4$s</a>', $url, $attr_title, join( ' ', $attributes ), $title );
+			printf( '<a href="%1$s" title="%2$s" %3$s>%4$s</a>', esc_url($url), esc_attr($attr_title), wp_kses_post( join( ' ', $attributes ) ), wp_kses_post($title) );
 		}
 
 		/**
@@ -176,7 +176,7 @@ if ( ! class_exists( 'BEWPI_Packing_Slip' ) ) {
 		public static function display_order_page_packing_slip_meta_box( $post ) {
 			$packing_slip = new BEWPI_Packing_Slip( $post->ID );
 
-			$packing_slip->show_packing_slip( __( 'View', 'woocommerce-pdf-invoices' ), $post->ID, 'view', array(
+			$packing_slip->show_packing_slip( esc_html__( 'View', 'woocommerce-pdf-invoices' ), $post->ID, 'view', array(
 				'class="button grant_access order-page packing-slip wpi"',
 				'target="_blank"',
 				)

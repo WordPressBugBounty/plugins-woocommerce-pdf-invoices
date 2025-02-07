@@ -15,12 +15,14 @@
  * @version 0.0.1
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 ?>
 
 <table class="footer">
 	<tr>
 		<td>
-			<?php printf( __( '%1$s of %2$s', 'woocommerce-pdf-invoices' ), '{PAGENO}', '{nbpg}' ); ?>
+			<?php printf( esc_html__( '%1$s of %2$s', 'woocommerce-pdf-invoices' ), '{PAGENO}', '{nbpg}' ); ?>
 		</td>
 	</tr>
 </table>

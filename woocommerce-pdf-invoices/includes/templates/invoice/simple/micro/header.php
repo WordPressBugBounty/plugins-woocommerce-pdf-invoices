@@ -1,3 +1,9 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+?>
+
 <table class="company two-column">
 	<tr>
 		<td class="logo" width="50%">
@@ -10,8 +16,8 @@
 			?>
 		</td>
 		<td class="info small-font" width="50%">
-			<p><?php echo nl2br( WPI()->templater()->get_option( 'bewpi_company_address' ) ); ?></p>
-			<p><?php echo nl2br( WPI()->templater()->get_option( 'bewpi_company_details' ) ); ?></p>
+			<p><?php echo wp_kses_post( nl2br( WPI()->templater()->get_option( 'bewpi_company_address' ) ) ); ?></p>
+			<p><?php echo wp_kses_post( nl2br( WPI()->templater()->get_option( 'bewpi_company_details' ) ) ); ?></p>
 		</td>
 	</tr>
 </table>

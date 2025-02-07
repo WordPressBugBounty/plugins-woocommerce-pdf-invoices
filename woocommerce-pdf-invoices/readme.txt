@@ -1,14 +1,14 @@
-=== Plugin Name ===
-Contributors: baaaaas
+===  Invoices for WooCommerce ===
+Contributors: giucu91, baaaaas
 Donate link: 
-Tags: Invoices for WooCommerce, invoice, packing slips, delivery note, packing list, shipping list, generate, pdf, woocommerce, attachment, email, customer invoice, processing, vat, tax, sequential, number, dropbox, google drive, onedrive, egnyte, cloud, storage
-Requires at least: 4.0
-Tested up to: 5.8
-Stable tag: 3.1.9
+Tags: invoices, packing slips, pdf invoices, woocommerce
+Tested up to: 6.7
+Requires PHP: 7.4
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Automatically generate and attach customizable PDF Invoices and PDF Packing Slips for WooCommerce emails and directly send to Dropbox, Google Drive, OneDrive or Egnyte.
+Automatically generate and attach customizable PDF Invoices and PDF Packing Slips for WooCommerce to emails.
 
 == Description ==
 *Invoicing can be time consuming. Well, not anymore! Invoices for WooCommerce automates the invoicing process by generating and sending it to your customers.*
@@ -343,6 +343,9 @@ Since version 2.9.4 the plugin removed the ability to update the PDF invoice whe
 3. Refresh page and Update button will appear.
 
 == Changelog ==
+
+= 3.2.0 - February 7. 2025 =
+- Made a review of plugin's code.
 
 = 3.1.9 - October 12, 2021 =
 

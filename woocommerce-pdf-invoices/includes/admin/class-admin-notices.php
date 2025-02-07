@@ -91,6 +91,15 @@ class BEWPI_Admin_Notices {
 	 * Uses check_ajax_referer to verify nonce.
 	 */
 	public static function dismiss_notice() {
+
+		if ( ! isset( $_POST['option_name'] ) ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['dismissible_length'] ) ) {
+			return;
+		}
+
 		$option_name        = sanitize_text_field( wp_unslash( $_POST['option_name'] ) );
 		$dismissible_length = sanitize_text_field( wp_unslash( $_POST['dismissible_length'] ) );
 		$transient          = 0;
@@ -158,6 +167,6 @@ class BEWPI_Admin_Notices {
 		ob_start();
 		include WPI_DIR . '/includes/admin/views/html-deactivation-notice.php';
 		$content = ob_get_clean();
-		die( $content ); // WPCS: XSS OK.
+		die( wp_kses_post($content) );
 	}
 }

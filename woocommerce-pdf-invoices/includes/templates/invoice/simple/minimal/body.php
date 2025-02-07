@@ -15,6 +15,8 @@
  * @version 0.0.1
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 $templater                  = WPI()->templater();
 $invoice                    = $templater->invoice;
 $order                      = $invoice->order;
@@ -63,7 +65,7 @@ $terms                      = $templater->get_option( 'bewpi_terms' );
 		<td>
 			<?php
 			printf( '<strong>%s</strong><br />', esc_html__( 'Bill to:', 'woocommerce-pdf-invoices' ) );
-			echo $formatted_billing_address;
+			echo wp_kses_post($formatted_billing_address);
 
 			do_action( 'wpi_after_formatted_billing_address', $invoice );
 			?>
@@ -73,8 +75,7 @@ $terms                      = $templater->get_option( 'bewpi_terms' );
 			<?php
 			if ( WPI()->get_option( 'template', 'show_ship_to' ) && ! WPI()->has_only_virtual_products( $order ) && ! empty( $formatted_shipping_address ) ) {
 				printf( '<strong>%s</strong><br />', esc_html__( 'Ship to:', 'woocommerce-pdf-invoices' ) );
-				echo $formatted_shipping_address;
-
+				echo wp_kses_post($formatted_shipping_address);
 				do_action( 'wpi_after_formatted_shipping_address', $invoice );
 			}
 			?>
@@ -82,7 +83,10 @@ $terms                      = $templater->get_option( 'bewpi_terms' );
 	</tr>
 	<tr class="custom-information">
 		<td colspan="3">
-			<?php echo apply_filters( 'wpi_custom_information', '', $invoice ); ?>
+			<?php
+			$custom_information = apply_filters( 'wpi_custom_information', '', $invoice );
+			echo wp_kses_post( $custom_information );
+			?>
 		</td>
 	</tr>
 </table>
@@ -133,11 +137,11 @@ $terms                      = $templater->get_option( 'bewpi_terms' );
 			</td>
 
 			<td width="25%" align="left" class="border <?php echo $i === $length ? 'last' : ''; ?> <?php echo esc_attr( $class ); ?>">
-				<?php echo $total['label']; ?>
+				<?php echo wp_kses_post($total['label']); ?>
 			</td>
 
 			<td width="25%" align="right" class="border <?php echo $i === $length ? 'last' : ''; ?> <?php echo esc_attr( $class ); ?>">
-				<?php echo str_replace( '&nbsp;', '', $total['value'] ); ?>
+				<?php echo wp_kses_post(str_replace( '&nbsp;', '', $total['value'] )); ?>
 			</td>
 		</tr>
 
@@ -157,12 +161,12 @@ $terms                      = $templater->get_option( 'bewpi_terms' );
 				// Note added by customer.
 				$customer_note = BEWPI_WC_Order_Compatibility::get_customer_note( $order );
 				if ( $customer_note ) {
-					printf( '<strong>' . __( 'Note from customer: %s', 'woocommerce-pdf-invoices' ) . '</strong><br>', nl2br( $customer_note ) );
+					printf( '<strong>' . esc_html__( 'Note from customer: %s', 'woocommerce-pdf-invoices' ) . '</strong><br>', wp_kses_post(nl2br( $customer_note )) );
 				}
 
 				// Notes added by administrator on 'Edit Order' page.
 				foreach ( $order->get_customer_order_notes() as $custom_order_note ) {
-					printf( '<strong>' . __( 'Note to customer: %s', 'woocommerce-pdf-invoices' ) . '</strong><br>', nl2br( $custom_order_note->comment_content ) );
+					printf( '<strong>' . esc_html__( 'Note to customer: %s', 'woocommerce-pdf-invoices' ) . '</strong><br>', wp_kses_post(nl2br( $custom_order_note->comment_content )) );
 				}
 			}
 			?>
@@ -187,7 +191,7 @@ $terms                      = $templater->get_option( 'bewpi_terms' );
 		<table>
 			<tr>
 				<td style="border: 1px solid #000;">
-					<?php echo nl2br( $terms ); ?>
+					<?php echo wp_kses_post( nl2br( $terms ) ); ?>
 				</td>
 			</tr>
 		</table>

@@ -1,0 +1,30 @@
+{
+  "name": "be/woocommerce-pdf-invoices",
+  "description": "A WordPress plugin that automatically generates and attaches PDF invoices to WooCommerce emails.",
+  "keywords": ["wordpress", "woocommerce", "pdf", "invoice"],
+  "homepage": "https://wcpdfinvoices.com",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "George Ciobanu",
+      "email": "contact@wavianstudio.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/baselbers/mpdf",
+      "canonical": false
+    }
+  ],
+  "require": {
+    "mpdf/mpdf": "v8.2.5"
+  },
+  "autoload": {
+    "classmap": [
+      "includes/"
+    ],
+    "files": []
+  }
+}

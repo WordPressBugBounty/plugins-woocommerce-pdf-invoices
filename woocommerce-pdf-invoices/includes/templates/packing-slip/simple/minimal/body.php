@@ -15,6 +15,8 @@
  * @version 0.0.1
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 $templater                  = WPI()->templater();
 $order                      = $templater->order;
 $packing_slip               = $templater->packing_slip;
@@ -27,34 +29,34 @@ $color                      = $templater->get_option( 'bewpi_color_theme' );
 <table>
 	<tr class="title">
 		<td colspan="3">
-			<h2><?php _e( 'Packing Slip', 'woocommerce-pdf-invoices' ); ?></h2>
+			<h2><?php esc_html_e( 'Packing Slip', 'woocommerce-pdf-invoices' ); ?></h2>
 		</td>
 	</tr>
 	<tr class="information">
 		<td width="50%">
 			<?php
-			printf( __( 'Order Date: %s', 'woocommerce-pdf-invoices' ), $packing_slip->get_formatted_order_date() );
+			printf( esc_html__( 'Order Date: %s', 'woocommerce-pdf-invoices' ), wp_kses_post($packing_slip->get_formatted_order_date()) );
 			printf( '<br />' );
-			printf( __( 'Order Number: %s', 'woocommerce-pdf-invoices' ), $order->get_order_number() );
+			printf( esc_html__( 'Order Number: %s', 'woocommerce-pdf-invoices' ), wp_kses_post($order->get_order_number()) );
 
 			$shipping_method = $order->get_shipping_method();
 			if ( $shipping_method ) {
 				printf( '<br />' );
-				printf( __( 'Shipping Method: %s', 'woocommerce-pdf-invoices' ), $shipping_method );
+				printf( esc_html__( 'Shipping Method: %s', 'woocommerce-pdf-invoices' ), esc_html($shipping_method) );
 			}
 
 			$payment_method = $order->get_payment_method_title();
 			if ( $payment_method ) {
 				printf( '<br />' );
-				printf( __( 'Payment Method: %s', 'woocommerce-pdf-invoices' ), $payment_method );
+				printf( esc_html__( 'Payment Method: %s', 'woocommerce-pdf-invoices' ), esc_html($payment_method) );
 			}
 			?>
 		</td>
 
 		<td>
 			<?php
-			printf( '<strong>%s</strong><br />', __( 'Bill to:', 'woocommerce-pdf-invoices' ) );
-			echo $formatted_billing_address;
+			printf( '<strong>%s</strong><br />', esc_html__( 'Bill to:', 'woocommerce-pdf-invoices' ) );
+			echo wp_kses_post($formatted_billing_address);
 
 			do_action( 'wpi_after_formatted_billing_address', $packing_slip );
 			?>
@@ -62,8 +64,8 @@ $color                      = $templater->get_option( 'bewpi_color_theme' );
 
 		<td>
 			<?php
-			printf( '<strong>%s</strong><br />', __( 'Ship to:', 'woocommerce-pdf-invoices' ) );
-			echo $formatted_shipping_address;
+			printf( '<strong>%s</strong><br />', esc_html__( 'Ship to:', 'woocommerce-pdf-invoices' ) );
+			echo wp_kses_post($formatted_shipping_address);
 
 			do_action( 'wpi_after_formatted_shipping_address', $packing_slip );
 			?>
@@ -72,17 +74,17 @@ $color                      = $templater->get_option( 'bewpi_color_theme' );
 </table>
 <table>
 	<thead>
-	<tr class="heading" bgcolor="<?php echo $color; ?>;">
+	<tr class="heading" bgcolor="<?php echo sanitize_hex_color($color); ?>;">
 		<th>
-			<?php _e( 'SKU', 'woocommerce-pdf-invoices' ); ?>
+			<?php esc_html_e( 'SKU', 'woocommerce-pdf-invoices' ); ?>
 		</th>
 
 		<th>
-			<?php _e( 'Product', 'woocommerce-pdf-invoices' ); ?>
+			<?php esc_html_e( 'Product', 'woocommerce-pdf-invoices' ); ?>
 		</th>
 
 		<th>
-			<?php _e( 'Qty', 'woocommerce-pdf-invoices' ); ?>
+			<?php esc_html_e( 'Qty', 'woocommerce-pdf-invoices' ); ?>
 		</th>
 	</tr>
 	</thead>
@@ -94,7 +96,7 @@ $color                      = $templater->get_option( 'bewpi_color_theme' );
 
 		<tr class="item">
 			<td width="10%">
-				<?php echo $product && $product->get_sku() ? $product->get_sku() : '-'; ?>
+				<?php echo $product && $product->get_sku() ? esc_html($product->get_sku()) : '-'; ?>
 			</td>
 
 			<td width="65%">
@@ -111,7 +113,7 @@ $color                      = $templater->get_option( 'bewpi_color_theme' );
 			</td>
 
 			<td width="25%">
-				<?php echo $item['qty']; ?>
+				<?php echo esc_html($item['qty']); ?>
 			</td>
 		</tr>
 
@@ -128,12 +130,12 @@ $color                      = $templater->get_option( 'bewpi_color_theme' );
 				// Note added by customer.
 				$customer_note = BEWPI_WC_Order_Compatibility::get_customer_note( $order );
 				if ( $customer_note ) {
-					printf( '<strong>' . __( 'Note from customer: %s', 'woocommerce-pdf-invoices' ) . '</strong><br />', nl2br( $customer_note ) );
+					printf( '<strong>' . esc_html__( 'Note from customer: %s', 'woocommerce-pdf-invoices' ) . '</strong><br />', wp_kses_post(nl2br( $customer_note )) );
 				}
 
 				// Notes added by administrator on 'Edit Order' page.
 				foreach ( $order->get_customer_order_notes() as $custom_order_note ) {
-					printf( '<strong>' . __( 'Note to customer: %s', 'woocommerce-pdf-invoices' ) . '</strong><br />', nl2br( $custom_order_note->comment_content ) );
+					printf( '<strong>' . esc_html__( 'Note to customer: %s', 'woocommerce-pdf-invoices' ) . '</strong><br />', wp_kses_post(nl2br( $custom_order_note->comment_content )) );
 				}
 			}
 			?>

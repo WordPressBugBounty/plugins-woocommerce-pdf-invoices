@@ -10,10 +10,12 @@
  * @version     1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 $settings_url = add_query_arg( array( 'page' => WPI()->get_plugin_slug() ), admin_url( 'admin.php' ) );
 ?>
 <div class="updated notice notice-success is-dismissible" data-dismissible="activation-forever">
 	<p>
-		<?php printf( __( 'The settings of Invoices for WooCommerce are available <a href="%1$s">on this page</a>.', 'woocommerce-pdf-invoices' ), esc_url( $settings_url ) ); ?>
+		<?php printf( wp_kses_post(__( 'The settings of Invoices for WooCommerce are available <a href="%1$s">on this page</a>.', 'woocommerce-pdf-invoices' )), esc_url( $settings_url ) ); ?>
 	</p>
 </div>

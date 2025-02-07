@@ -15,15 +15,17 @@
  * @version 0.0.1
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 ?>
 
 <table class="footer">
 	<tr>
 		<td>
-			<?php echo nl2br( WPI()->templater()->get_option( 'bewpi_left_footer_column' ) ); ?>
+			<?php echo wp_kses_post( nl2br( WPI()->templater()->get_option( 'bewpi_left_footer_column' ) ) ); ?>
 		</td>
 		<td width="20%">
-			<?php printf( __( '%1$s of %2$s', 'woocommerce-pdf-invoices' ), '{PAGENO}', '{nbpg}' ); ?>
+			<?php printf( esc_html__( '%1$s of %2$s', 'woocommerce-pdf-invoices' ), '{PAGENO}', '{nbpg}' ); ?>
 		</td>
 	</tr>
 </table>

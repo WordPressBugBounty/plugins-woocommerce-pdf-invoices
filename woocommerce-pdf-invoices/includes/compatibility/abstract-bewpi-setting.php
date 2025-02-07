@@ -90,7 +90,7 @@ if ( ! class_exists( 'BEWPI_Abstract_Setting' ) ) {
 		public function select_callback( $args ) {
 			$options = get_option( $args['page'] );
 			?>
-			<select id="<?php echo $args['id']; ?>" name="<?php echo $args['page'] . '[' . $args['name'] . ']'; ?>">
+			<select id="<?php echo esc_attr($args['id']); ?>" name="<?php echo esc_attr($args['page']) . '[' . esc_attr($args['name']) . ']'; ?>">
 				<?php
 				foreach ( $args['options'] as $option ) :
 
@@ -106,30 +106,30 @@ if ( ! class_exists( 'BEWPI_Abstract_Setting' ) ) {
 				endforeach;
 				?>
 			</select>
-			<div class="bewpi-notes"><?php echo $args['desc']; ?></div>
+			<div class="bewpi-notes"><?php echo wp_kses_post($args['desc']); ?></div>
 			<?php
 		}
 
 		public function reset_counter_callback( $args ) {
 			$class = ( isset( $args['class'] ) ) ? $args['class'] : "bewpi-notes";
 			?>
-			<input type="hidden" name="<?php echo $args['page'] . '[' . $args['name'] . ']'; ?>" value="0"/>
-			<input id="<?php echo $args['id']; ?>"
-			       name="<?php echo $args['page'] . '[' . $args['name'] . ']'; ?>"
-			       type="<?php echo $args['type']; ?>"
+			<input type="hidden" name="<?php echo esc_attr($args['page']) . '[' . esc_attr($args['name']) . ']'; ?>" value="0"/>
+			<input id="<?php echo esc_attr($args['id']); ?>"
+			       name="<?php echo esc_attr($args['page']) . '[' . esc_attr($args['name']) . ']'; ?>"
+			       type="<?php echo esc_attr($args['type']); ?>"
 			       value="1"
 				<?php
 				checked( (bool) get_transient( 'bewpi_next_invoice_number' ) );
 
 				if ( isset ( $args['attrs'] ) ) {
-					foreach ( $args['attrs'] as $attr ) {
-						echo $attr . ' ';
+					foreach ( $args['attrs'] as $attr => $value ) {
+						echo esc_attr( $attr ) . '="' . esc_attr( $value ) . '"" ';
 					}
 				}
 				?>
 			/>
-			<label for="<?php echo $args['id']; ?>" class="<?php echo $class; ?>">
-				<?php echo $args['desc']; ?>
+			<label for="<?php echo esc_attr($args['id']); ?>" class="<?php echo esc_attr($class); ?>">
+				<?php echo wp_kses_post($args['desc']); ?>
 			</label>
 			<?php
 		}
@@ -138,19 +138,19 @@ if ( ! class_exists( 'BEWPI_Abstract_Setting' ) ) {
 			$class               = ( isset( $args['class'] ) ) ? $args['class'] : "bewpi-notes";
 			$next_invoice_number = get_transient( 'bewpi_next_invoice_number' );
 			?>
-			<input id="<?php echo $args['id']; ?>"
-			       name="<?php echo $args['page'] . '[' . $args['name'] . ']'; ?>"
-			       type="<?php echo $args['type']; ?>"
+			<input id="<?php echo esc_attr($args['id']); ?>"
+			       name="<?php echo esc_attr($args['page']) . '[' . esc_attr($args['name']) . ']'; ?>"
+			       type="<?php echo esc_attr($args['type']); ?>"
 			       value="<?php echo esc_attr( ( false !== $next_invoice_number ) ? $next_invoice_number : BEWPI_Abstract_Invoice::get_max_invoice_number( (int) date_i18n( 'Y', current_time( 'timestamp' ) ) ) + 1 ); ?>"
 				<?php
 				if ( isset ( $args['attrs'] ) ) {
-					foreach ( $args['attrs'] as $attr ) {
-						echo $attr . ' ';
+					foreach ( $args['attrs'] as $attr => $value ) {
+						echo esc_attr( $attr ) . '="' . esc_attr( $value ) . '"" ';
 					}
 				}
 				?>
 			/>
-			<div class="<?php echo $class; ?>"><?php echo $args['desc']; ?></div>
+			<div class="<?php echo esc_attr($class); ?>"><?php echo wp_kses_post($args['desc']); ?></div>
 			<?php
 		}
 
@@ -159,11 +159,11 @@ if ( ! class_exists( 'BEWPI_Abstract_Setting' ) ) {
 			$class       = ( isset( $args['class'] ) ) ? $args['class'] : "bewpi-notes";
 			$is_checkbox = $args['type'] === 'checkbox';
 			if ( $is_checkbox ) { ?>
-				<input type="hidden" name="<?php echo $args['page'] . '[' . $args['name'] . ']'; ?>" value="0"/>
+				<input type="hidden" name="<?php echo esc_attr($args['page']) . '[' . esc_attr($args['name']) . ']'; ?>" value="0"/>
 			<?php } ?>
-			<input id="<?php echo $args['id']; ?>"
-			       name="<?php echo $args['page'] . '[' . $args['name'] . ']'; ?>"
-			       type="<?php echo $args['type']; ?>"
+			<input id="<?php echo esc_attr($args['id']); ?>"
+			       name="<?php echo esc_attr($args['page']) . '[' . esc_attr($args['name']) . ']'; ?>"
+			       type="<?php echo esc_attr($args['type']); ?>"
 			       value="<?php echo $is_checkbox ? 1 : esc_attr( $options[ $args['name'] ] ); ?>"
 
 				<?php if ( $is_checkbox ) {
@@ -171,17 +171,17 @@ if ( ! class_exists( 'BEWPI_Abstract_Setting' ) ) {
 				}
 
 				if ( isset ( $args['attrs'] ) ) {
-					foreach ( $args['attrs'] as $attr ) {
-						echo $attr . ' ';
+					foreach ( $args['attrs'] as $attr => $value ) {
+						echo esc_attr( $attr ) . '="' . esc_attr( $value ) . '"" ';
 					}
 				}
 				?>
 			/>
 			<?php if ( $is_checkbox ) { ?>
-				<label for="<?php echo $args['id']; ?>"
-				       class="<?php echo $class; ?>"><?php echo $args['desc']; ?></label>
+				<label for="<?php echo esc_attr($args['id']); ?>"
+				       class="<?php echo esc_attr($class); ?>"><?php echo wp_kses_post($args['desc']); ?></label>
 			<?php } else { ?>
-				<div class="<?php echo $class; ?>"><?php echo $args['desc']; ?></div>
+				<div class="<?php echo esc_attr($class); ?>"><?php echo wp_kses_post($args['desc']); ?></div>
 			<?php } ?>
 			<?php
 		}
@@ -189,11 +189,11 @@ if ( ! class_exists( 'BEWPI_Abstract_Setting' ) ) {
 		public function textarea_callback( $args ) {
 			$options = get_option( $args['page'] );
 			?>
-			<textarea id="<?php echo $args['id']; ?>"
-			          name="<?php echo $args['page'] . '[' . $args['name'] . ']'; ?>"
+			<textarea id="<?php echo esc_attr($args['id']); ?>"
+			          name="<?php echo esc_attr($args['page']) . '[' . esc_attr($args['name']) . ']'; ?>"
 			          rows="5"
 			><?php echo esc_textarea( $options[ $args['name'] ] ); ?></textarea>
-			<div class="bewpi-notes"><?php echo $args['desc']; ?></div>
+			<div class="bewpi-notes"><?php echo wp_kses_post($args['desc']); ?></div>
 			<?php
 		}
 

@@ -273,9 +273,17 @@ if ( ! class_exists( 'BE_WooCommerce_PDF_Invoices' ) ) {
 				return;
 			}
 
+			if ( ! isset( $_GET['bewpi_action'] ) ) {
+				return;
+			}
+
 			// verify nonce.
 			$action = sanitize_key( $_GET['bewpi_action'] );
 			if ( 'view' !== $action ) {
+				return;
+			}
+
+			if ( ! isset( $_GET['nonce'] ) ) {
 				return;
 			}
 
@@ -286,6 +294,10 @@ if ( ! class_exists( 'BE_WooCommerce_PDF_Invoices' ) ) {
 
 			if ( ! is_user_logged_in() ) {
 				wp_die( 'Access denied' );
+			}
+
+			if ( ! isset( $_GET['post'] ) ) {
+				return;
 			}
 
 			// verify woocommerce order.
@@ -320,6 +332,14 @@ if ( ! class_exists( 'BE_WooCommerce_PDF_Invoices' ) ) {
 				return;
 			}
 
+			if ( ! isset( $_GET['bewpi_action'] ) ) {
+				wp_die( 'Invalid request.' );
+			}
+
+			if ( ! isset( $_GET['nonce'] ) ) {
+				wp_die( 'Invalid request.' );
+			}
+
 			// sanitize data and verify nonce.
 			$action = sanitize_key( $_GET['bewpi_action'] );
 			$nonce  = sanitize_key( $_GET['nonce'] );
@@ -338,6 +358,10 @@ if ( ! class_exists( 'BE_WooCommerce_PDF_Invoices' ) ) {
 				wp_die( 'Access denied' );
 			}
 
+			if ( ! isset( $_GET['post'] ) ) {
+				wp_die( 'Invalid request.' );
+			}
+			
 			$order_id = intval( $_GET['post'] );
 
 			// execute invoice action.
@@ -693,7 +717,7 @@ if ( ! class_exists( 'BE_WooCommerce_PDF_Invoices' ) ) {
 			$url        = apply_filters( 'bewpi_pdf_invoice_url', $url, $order_id, $action );
 			$attr_title = $title . ' ' . __( 'PDF Invoice', 'woocommerce-pdf-invoices' );
 
-			printf( '<a href="%1$s" title="%2$s" %3$s>%4$s</a>', $url, $attr_title, join( ' ', $attributes ), $title );
+			printf( '<a href="%1$s" title="%2$s" %3$s>%4$s</a>', esc_url($url), esc_attr($attr_title), wp_kses_post( join( ' ', $attributes ) ), wp_kses_post($title) );
 		}
 
 		/**

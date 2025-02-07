@@ -229,7 +229,7 @@ class BEWPI_Template {
 	public function strip_non_inline_tags( $string ) {
 		_deprecated_function( __FUNCTION__, 'Invoices for WooCommerce 2.9.13', 'wp_filter_nohtml_kses()' );
 
-		return str_replace( array( '<p>', '</p>', '<br>', '</br>' ), '', $string );
+		return str_replace( array( '<p>', '</p>', '<br>', '</br>' ), '', wp_kses_post($string) );
 	}
 
 	/**
@@ -272,7 +272,7 @@ class BEWPI_Template {
 			return;
 		}
 
-		printf( '<th class="%1$s">%2$s</th>', esc_attr( $key ), $data );
+		printf( '<th class="%1$s">%2$s</th>', esc_attr( $key ), wp_kses_post($data) );
 	}
 
 	/**
@@ -290,7 +290,7 @@ class BEWPI_Template {
 			return;
 		}
 
-		printf( '<td class="%1$s">%2$s</td>', esc_attr( $key ), $data );
+		printf( '<td class="%1$s">%2$s</td>', esc_attr( $key ), wp_kses_post($data) );
 	}
 
 	/**
@@ -343,6 +343,24 @@ class BEWPI_Template {
 		}
 
 		return $value;
+	}
+
+	public function get_company_logo(){
+
+		$company_logo = false;
+
+		$attachment = WPI()->get_option( 'template', 'company_logo' );
+		if ( ! empty( $attachment ) ) {
+			// use absolute path due to probability of (local)host misconfiguration.
+			// problems with shared hosting when one ip is configured to multiple users/environments.
+			$attachment_path = get_attached_file( $attachment );
+			if ( false !== $attachment_path ) {
+				$company_logo = file_get_contents( $attachment_path );
+			}
+		}
+
+		return $company_logo;
+
 	}
 
 	/**
@@ -439,6 +457,6 @@ class BEWPI_Template {
 	 * @return string The actual url from the Media Library.
 	 */
 	public function get_logo_url() {
-		return esc_url_raw( $this->get_option( 'bewpi_company_logo' ) );
+		return esc_url( $this->get_option( 'bewpi_company_logo' ) );
 	}
 }

@@ -10,6 +10,8 @@
  * @version     1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 $page_options = get_option( $args['page'] );
 $options      = $page_options[ $args['name'] ];
 ?>
@@ -21,13 +23,13 @@ $options      = $page_options[ $args['name'] ];
 		?>
 		<li>
 			<input type="hidden" name="<?php echo esc_attr( $name ); ?>" value="0" />
-			<input id="<?php echo $arg['value']; ?>" type="checkbox" name="<?php echo esc_attr( $name ); ?>" value="1" <?php checked( $options[ $arg['value'] ], 1 ); ?> />
-			<label for="<?php echo $arg['value']; ?>"">
+			<input id="<?php echo esc_attr($arg['value']); ?>" type="checkbox" name="<?php echo esc_attr( $name ); ?>" value="1" <?php checked( $options[ $arg['value'] ], 1 ); ?> />
+			<label for="<?php echo esc_attr($arg['value']); ?>">
 				<?php echo esc_html( $arg['name'] ); ?>
 			</label>
 		</li>
 	<?php } ?>
 </ul>
 <div class="bewpi-notes">
-	<?php echo $args['desc']; ?>
+	<?php echo wp_kses_post($args['desc']); ?>
 </div>

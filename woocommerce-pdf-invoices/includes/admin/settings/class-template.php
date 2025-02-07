@@ -143,7 +143,7 @@ class BEWPI_Template_Settings extends BEWPI_Abstract_Settings {
 				'type'     => 'text',
 				'desc'     => sprintf( __( '<a href="%s">Format</a> of invoice date and order date.', 'woocommerce-pdf-invoices' ), 'http://php.net/manual/en/datetime.formats.date.php' ),
 				'default'  => 'Y-m-d H:i:s',
-				'attrs'    => array( 'required' ),
+				'attrs'    => array( 'required' => '' ),
 			),
 			array(
 				'id'       => 'bewpi-display-prices-incl-tax',
@@ -400,7 +400,7 @@ class BEWPI_Template_Settings extends BEWPI_Abstract_Settings {
 				'desc'     => __( 'Reset invoice counter', 'woocommerce-pdf-invoices' ),
 				'class'    => 'bewpi-checkbox-option-title',
 				'default'  => 0,
-				'attrs'    => array( 'onchange="bewpi.setting.enableDisableNextInvoiceNumbering(this)"' ),
+				'attrs'    => array( 'onchange' => 'bewpi.setting.enableDisableNextInvoiceNumbering(this)' ),
 			),
 			array(
 				'id'       => 'bewpi-next-invoice-number',
@@ -415,8 +415,8 @@ class BEWPI_Template_Settings extends BEWPI_Abstract_Settings {
 				              . __( '<b>Note:</b> Only available for Sequential numbering. All PDF invoices with invoice number greater then next invoice number will be deleted!', 'woocommerce-pdf-invoices' ),
 				'default'  => 1,
 				'attrs'    => array(
-					'readonly',
-					'min="1"',
+					'readonly' => '',
+					'min'      => '1',
 				),
 			),
 			array(
@@ -430,9 +430,9 @@ class BEWPI_Template_Settings extends BEWPI_Abstract_Settings {
 				'desc'     => '',
 				'default'  => 5,
 				'attrs'    => array(
-					'min="3"',
-					'max="20"',
-					'required',
+					'min' => '3',
+					'max' => '20',
+					'required' => '',
 				),
 			),
 			array(
@@ -469,7 +469,7 @@ class BEWPI_Template_Settings extends BEWPI_Abstract_Settings {
 				              . '<br>'
 				              . sprintf( __( '<b>Note:</b> %s is required and slashes aren\'t supported.', 'woocommerce-pdf-invoices' ), '<code>[number]</code>' ),
 				'default'  => '[number]-[Y]',
-				'attrs'    => array( 'required' ),
+				'attrs'    => array( 'required' => '' ),
 			),
 			array(
 				'id'       => 'bewpi-reset-counter-yearly',

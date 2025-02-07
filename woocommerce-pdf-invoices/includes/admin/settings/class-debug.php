@@ -79,7 +79,7 @@ class BEWPI_Debug_Settings extends BEWPI_Abstract_Settings {
 		echo '<pre>';
 		foreach ( parent::$setting_tabs as $setting_tab ) {
 			$class = new $setting_tab['class'];
-			echo print_r( get_option( $class->settings_key ), true );
+			echo wp_kses_post(print_r( get_option( $class->settings_key ), true ));
 		}
 		echo '</pre>';
 	}

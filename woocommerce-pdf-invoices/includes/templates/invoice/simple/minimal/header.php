@@ -14,6 +14,9 @@
  * @package WooCommerce_PDF_Invoices/Templates
  * @version 0.0.1
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 ?>
 
 <table cellpadding="0" cellspacing="0">
@@ -29,7 +32,7 @@
 		</td>
 
 		<td>
-			<?php echo WPI()->get_formatted_company_address() . '<br>' . WPI()->get_formatted_company_details(); ?>
+			<?php echo wp_kses_post(WPI()->get_formatted_company_address()) . '<br>' . wp_kses_post(WPI()->get_formatted_company_details()); ?>
 		</td>
 	</tr>
 </table>

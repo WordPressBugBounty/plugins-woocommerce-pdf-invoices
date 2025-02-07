@@ -121,7 +121,7 @@ if ( ! class_exists( 'BEWPI_Abstract_Document' ) ) {
 				'orientation'       => 'P',
 			) );
 			/* @var mPDF $mpdf */
-			$mpdf = new mPDF(
+			$mpdf = new \Mpdf\Mpdf(array(
 				$mpdf_params['mode'],
 				$mpdf_params['format'],
 				$mpdf_params['default_font_size'],
@@ -133,7 +133,7 @@ if ( ! class_exists( 'BEWPI_Abstract_Document' ) ) {
 				$mpdf_params['margin_header'],
 				$mpdf_params['margin_footer'],
 				$mpdf_params['orientation']
-			);
+			));
 
 			// Add company logo image as a variable.
 			// As of 3.0.9 we've improved the media upload settings feature and so bewpi_company_logo contains the id of the attachment.
@@ -143,7 +143,7 @@ if ( ! class_exists( 'BEWPI_Abstract_Document' ) ) {
 				// problems with shared hosting when one ip is configured to multiple users/environments.
 				$attachment_path = get_attached_file( $attachment );
 				if ( false !== $attachment_path ) {
-					$mpdf->company_logo = file_get_contents( $attachment_path );
+					$mpdf->imageVars['company_logo'] = file_get_contents( $attachment_path );
 				}
 			}
 
