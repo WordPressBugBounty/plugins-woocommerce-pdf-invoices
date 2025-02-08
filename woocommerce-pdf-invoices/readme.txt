@@ -4,7 +4,7 @@ Donate link:
 Tags: invoices, packing slips, pdf invoices, woocommerce
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,21 +28,21 @@ This WooCommerce plugin generates PDF invoices and PDF packing slips, attaches i
 - Download invoice from My Account page.
 - Mark invoices as paid.
 
-> **Invoices for WooCommerce Premium**<br /><br />
-> This plugin offers a premium version which comes with the following features:<br /><br />
-> - Attach PDF invoices to many more email types including third party plugins<br />
-> - Send credit notes and cancelled PDF invoices<br />
-> - Fully customize PDF invoice table content by modifying line item columns and total rows<br />
-> - Automatically send a reminder email configurable within a specific period of time and display a payment due date<br />
-> - Bulk generate PDF invoices<br />
-> - Bulk export and/or download PDF invoices<br />
-> - Bill periodically by generating and sending global invoices<br />
-> - Let customers decide to generate a PDF invoice on checkout<br />
-> - Change the font of the PDF invoices<br />
-> - Add additional PDF files to PDF invoices<br />
-> - Send customer invoices directly to multiple recipients<br />
-> - Compatible with [WooCommerce Subscriptions](http://www.woothemes.com/products/woocommerce-subscriptions) plugin emails.<br /><br />
-> [Upgrade to Invoices for WooCommerce Premium >>](http://wcpdfinvoices.com)
+**Invoices for WooCommerce Premium**<br /><br />
+This plugin offers a premium version which comes with the following features:<br /><br />
+- Attach PDF invoices to many more email types including third party plugins<br />
+- Send credit notes and cancelled PDF invoices<br />
+- Fully customize PDF invoice table content by modifying line item columns and total rows<br />
+- Automatically send a reminder email configurable within a specific period of time and display a payment due date<br />
+- Bulk generate PDF invoices<br />
+- Bulk export and/or download PDF invoices<br />
+- Bill periodically by generating and sending global invoices<br />
+- Let customers decide to generate a PDF invoice on checkout<br />
+- Change the font of the PDF invoices<br />
+- Add additional PDF files to PDF invoices<br />
+- Send customer invoices directly to multiple recipients<br />
+- Compatible with [WooCommerce Subscriptions](http://www.woothemes.com/products/woocommerce-subscriptions) plugin emails.<br /><br />
+- [Upgrade to Invoices for WooCommerce Premium >>](http://wcpdfinvoices.com)
 
 #### Support
 
@@ -343,6 +343,9 @@ Since version 2.9.4 the plugin removed the ability to update the PDF invoice whe
 3. Refresh page and Update button will appear.
 
 == Changelog ==
+
+= 3.2.1 - February 8. 2025 =
+- Downgrade psr/log to 1.1 in order to ensure compatibility with php 7.4.x and some plugins like WooCommerce PayPal Payments.
 
 = 3.2.0 - February 7. 2025 =
 - Made a review of plugin's code.
